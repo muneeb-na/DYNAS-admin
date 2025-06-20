@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secure Login</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f3f3f3;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    input {
+      padding: 12px;
+      width: 90%;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px 20px;
+      background: #4361ee;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    p#error {
+      color: red;
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Enter Admin Password</h2>
+    <input type="password" id="password" placeholder="Only password">
+    <br>
+    <button onclick="login()">Enter</button>
+    <p id="error">Incorrect password. Try again.</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCUZzR0QhKFu3Ne3yTJU2RPX_RZaYPsNns",
+      authDomain: "dynas-final.firebaseapp.com",
+      projectId: "dynas-final",
+      storageBucket: "dynas-final.appspot.com",
+      messagingSenderId: "448429408169",
+      appId: "1:448429408169:web:9237f956dfedacea3dceb8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.login = async function () {
+      const password = document.getElementById("password").value;
+      const error = document.getElementById("error");
+
+      const email = "admin@dynas.com"; // Hidden email hardcoded
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = "dashboard.html";
+      } catch (e) {
+        error.style.display = "block";
+      }
+    };
+  </script>
+</body>
+</html>
